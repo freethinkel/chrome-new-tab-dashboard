@@ -1,5 +1,7 @@
 import { nanoid } from 'nanoid';
 import { createStore, update } from 'nanostores';
+import { settings } from '.';
+import { AppStorage } from '../services/storage';
 
 const DEFAULT_PLUGIN_CODE = `
 const state = {
@@ -29,7 +31,8 @@ const state = {
 	 </div>
 	 \`)
 	 
-	 update(config, render);
+	 // update(config, render);
+	 render()
  }
  
  const options = {
@@ -45,26 +48,49 @@ export type Plugin = {
 
 export const store = createStore<Plugin[]>(() => {
 	try {
-		const cachedData = JSON.parse(localStorage.getItem('plugins') || '[]');
-		store.set(cachedData);
+		store.set([]);
+		AppStorage.getItem('plugins').then((cachedData) => {
+			setTimeout(() => {
+				update(store, (current) => [...((cachedData as Plugin[]) || [])]);
+			});
+		});
 	} catch (err) {
+		console.log(err);
 		store.set([]);
 	}
 });
 
 store.subscribe((data) => {
-	localStorage.setItem('plugins', JSON.stringify(data));
+	AppStorage.setItem('plugins', data);
 });
 
-export const addNewPlugin = (plugin: Plugin) =>
+export const addNewPlugin = (plugin: Plugin) => {
+	const pluginId = nanoid();
+	update(settings.store, (current) => {
+		return {
+			...current,
+			layout: [
+				...(current.layout || []),
+				{
+					w: 4,
+					h: 2,
+					y: 0,
+					x: current.layout.length * 4,
+					i: pluginId,
+					minH: 1,
+				},
+			],
+		};
+	});
 	update(store, (current) => [
 		...current,
 		{
 			...plugin,
 			code: DEFAULT_PLUGIN_CODE,
-			id: nanoid(),
+			id: pluginId,
 		},
 	]);
+};
 
 export const updatePlugin = (id: string, payload: Partial<Plugin>) => {
 	update(store, (current) =>

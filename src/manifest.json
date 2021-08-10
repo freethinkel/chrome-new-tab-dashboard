@@ -2,7 +2,23 @@
 	"name": "chrome dashboard",
 	"version": "0.1.0",
 	"manifest_version": 2,
-	"permissions": ["storage", "*://*/*"],
+	"permissions": [
+		"storage",
+		"topSites",
+		"system.cpu",
+		"system.memory",
+		"system.storage",
+		"power",
+		"tts",
+		"ttsEngine",
+		"geolocation",
+		"history",
+		"downloads",
+		"bookmarks",
+		"alarms",
+		"activeTab",
+		"*://*/*"
+	],
 	"host_permissions": ["*://*/*"],
 	"chrome_url_overrides": {
 		"newtab": "newtab.html"

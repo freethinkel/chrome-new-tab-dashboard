@@ -70,8 +70,11 @@ const PluginCardInner: FC<PluginCardProps> = ({ onEdit, plugin }) => {
 
 export const PluginCard: FC<PluginCardProps> = (props) => {
 	return (
-		<div className='p-2 rounded-lg bg-white dark:bg-gray-700 h-72 shadow relative group'>
-			<div className='absolute right-1 top-1 flex gap-1 opacity-0 group-hover:opacity-100 transition-all'>
+		<div className='p-2 rounded-lg bg-white dark:bg-gray-700 h-full shadow relative group'>
+			<div
+				onMouseDown={(e) => e.stopPropagation()}
+				className='absolute right-1 top-1 flex gap-1 opacity-0 group-hover:opacity-100 transition-all'
+			>
 				<IconButton onClick={props.onEdit}>
 					<Icon name='dots' />
 				</IconButton>

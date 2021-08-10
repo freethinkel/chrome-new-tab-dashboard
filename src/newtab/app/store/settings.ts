@@ -1,22 +1,33 @@
 import { createStore, update } from 'nanostores';
+import { Layout } from 'react-grid-layout';
+import { AppStorage } from '../services/storage';
 
 const DEFAULT = {
 	name: 'PNP Dashboard',
+	layout: [] as Layout[],
 };
 
 type Settings = typeof DEFAULT;
 
 export const store = createStore<Settings>(() => {
-	let cached = {};
 	try {
-		cached = JSON.parse(localStorage.getItem('settings') || '{}');
-	} catch (err) {}
-
-	store.set({ ...DEFAULT, ...cached });
+		store.set({ ...DEFAULT });
+		AppStorage.getItem('settings').then((cached) => {
+			setTimeout(() => {
+				update(store, (current) => ({
+					...DEFAULT,
+					...((cached as Partial<Settings>) || {}),
+				}));
+			});
+		});
+	} catch (err) {
+		store.set({ ...DEFAULT });
+	}
 });
 
 store.subscribe((value) => {
-	localStorage.setItem('settings', JSON.stringify(value));
+	console.log(value);
+	AppStorage.setItem('settings', value);
 });
 
 export const updateSetting = (data: Partial<Settings>) => {
