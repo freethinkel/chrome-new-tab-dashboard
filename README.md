@@ -1,5 +1,7 @@
 # Chrome dashboard new tab plugin
 
+![Screenshot](/screenshots/dashboard.png)
+
 This extension uses the following permissions:
 
 - `storage`,
