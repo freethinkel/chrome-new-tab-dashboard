@@ -49,7 +49,6 @@ export const Dashboard: FC = () => {
 						</div>
 					</div>
 					<Grid>
-						{/* <div className='flex flex-wrap -mx-1'> */}
 						{allPlugins.map((plugin) => (
 							<div key={plugin.id}>
 								<PluginCard
@@ -65,16 +64,15 @@ export const Dashboard: FC = () => {
 								/>
 							</div>
 						))}
-						{/* </div> */}
 					</Grid>
-					{/* <div className='w-1/3 px-1 pt-2'>
-						<NewWidgetButton
-							onClick={() => plugins.addNewPlugin({ name: 'test' })}
-						/>
-					</div> */}
 				</div>
 			</div>
 			<Modal />
+			<style>
+				{`body {
+					background-image: url(${settingsStore.backgroundImage});
+				}`}
+			</style>
 		</>
 	);
 };

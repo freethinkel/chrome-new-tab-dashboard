@@ -1,5 +1,6 @@
 import { nanoid } from 'nanoid';
 import { createStore, update } from 'nanostores';
+import { Layout } from 'react-grid-layout';
 import { settings } from '.';
 import { AppStorage } from '../services/storage';
 
@@ -55,7 +56,6 @@ export const store = createStore<Plugin[]>(() => {
 			});
 		});
 	} catch (err) {
-		console.log(err);
 		store.set([]);
 	}
 });
@@ -64,6 +64,36 @@ store.subscribe((data) => {
 	AppStorage.setItem('plugins', data);
 });
 
+const createLayout = (
+	id: string,
+	{ x, y, layout }: { x?: number; y?: number; layout: Layout[] }
+) => {
+	return {
+		w: 4,
+		h: 2,
+		y: y || Math.max(...layout.map((l) => l.y)) + 1,
+		x: (x || 0) * 4,
+		i: id,
+		minH: 1,
+	};
+};
+
+export const mergePlugins = (plugins: Plugin[]) => {
+	const _plugins = plugins.map((p) => ({ ...p, id: nanoid() }));
+	update(settings.store, (current) => {
+		return {
+			...current,
+			layout: [
+				...(current.layout || []),
+				..._plugins.map((p, i) =>
+					createLayout(p.id, { layout: current.layout })
+				),
+			],
+		};
+	});
+	update(store, (current) => [...current, ..._plugins]);
+};
+
 export const addNewPlugin = (plugin: Plugin) => {
 	const pluginId = nanoid();
 	update(settings.store, (current) => {
@@ -71,14 +101,7 @@ export const addNewPlugin = (plugin: Plugin) => {
 			...current,
 			layout: [
 				...(current.layout || []),
-				{
-					w: 4,
-					h: 2,
-					y: 0,
-					x: current.layout.length * 4,
-					i: pluginId,
-					minH: 1,
-				},
+				createLayout(pluginId, { layout: current.layout }),
 			],
 		};
 	});

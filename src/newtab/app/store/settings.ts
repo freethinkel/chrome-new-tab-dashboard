@@ -5,6 +5,7 @@ import { AppStorage } from '../services/storage';
 const DEFAULT = {
 	name: 'PNP Dashboard',
 	layout: [] as Layout[],
+	backgroundImage: null as string | null,
 };
 
 type Settings = typeof DEFAULT;
@@ -26,7 +27,6 @@ export const store = createStore<Settings>(() => {
 });
 
 store.subscribe((value) => {
-	console.log(value);
 	AppStorage.setItem('settings', value);
 });
 
