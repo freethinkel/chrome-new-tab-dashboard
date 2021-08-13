@@ -6,9 +6,9 @@ This extension uses the following permissions:
 
 - `storage`,
 - `topSites`,
-- `system.cpu",
-- `system.memory",
-- `system.storage",
+- `system.cpu`,
+- `system.memory`,
+- `system.storage`,
 - `power`,
 - `tts`,
 - `ttsEngine`,
