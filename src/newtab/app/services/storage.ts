@@ -2,7 +2,7 @@ export class AppStorage {
 	public static getItem<T>(key: string): Promise<T> {
 		return new Promise((rslv, rjct) => {
 			if (chrome?.storage) {
-				chrome.storage.sync.get(key, (data: any) => {
+				chrome.storage.local.get(key, (data: any) => {
 					try {
 						rslv(JSON.parse(data[key]));
 					} catch (err) {
@@ -22,7 +22,7 @@ export class AppStorage {
 	public static setItem(key: string, value: any): Promise<any> {
 		return new Promise((rslv, rjct) => {
 			if (chrome?.storage) {
-				chrome.storage.sync.set(
+				chrome.storage.local.set(
 					{
 						[key]: JSON.stringify(value),
 					},

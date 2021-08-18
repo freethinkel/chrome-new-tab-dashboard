@@ -38,6 +38,9 @@ body {
 }
 
 @media (prefers-color-scheme: dark) {
+	:root {
+		color-scheme: dark;
+	}
 	.react-grid-item.react-grid-placeholder {
 		background-color: #f1f1f1 !important;
 		border-radius: 8px !important;

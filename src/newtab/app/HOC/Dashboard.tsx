@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useStore } from 'nanostores/react';
 import { PluginCard } from '../components/PluginCard';
 import { NewWidgetButton } from '../components/NewWidgetButton';
@@ -14,14 +14,6 @@ import { Layout } from 'react-grid-layout';
 export const Dashboard: FC = () => {
 	const allPlugins = useStore(plugins.store);
 	const settingsStore = useStore(settings.store);
-
-	const layout: Layout[] = allPlugins.map((plugin, i) => ({
-		w: 1,
-		h: 2,
-		x: i,
-		y: 0,
-		i: plugin.id!,
-	}));
 
 	return (
 		<>
@@ -54,13 +46,13 @@ export const Dashboard: FC = () => {
 								<PluginCard
 									plugin={plugin}
 									onDelete={() => plugins.deletePlugin(plugin.id!)}
-									onEdit={() =>
+									onEdit={() => {
 										modal.openModal({
 											component: <EditWidgetModal plugin={plugin} />,
 											name: 'Редактирование виджета',
-											size: modal.ModalSize.md,
-										})
-									}
+											size: modal.ModalSize.lg,
+										});
+									}}
 								/>
 							</div>
 						))}

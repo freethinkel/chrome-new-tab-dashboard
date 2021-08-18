@@ -6,6 +6,9 @@ const DEFAULT = {
 	name: 'PNP Dashboard',
 	layout: [] as Layout[],
 	backgroundImage: null as string | null,
+	codeEditorSettings: {
+		theme: 'vs-dark' as string,
+	},
 };
 
 type Settings = typeof DEFAULT;
@@ -27,6 +30,7 @@ export const store = createStore<Settings>(() => {
 });
 
 store.subscribe((value) => {
+	document.querySelector('title')!.innerHTML = value.name;
 	AppStorage.setItem('settings', value);
 });
 
