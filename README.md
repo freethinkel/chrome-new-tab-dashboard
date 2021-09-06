@@ -1,4 +1,4 @@
-# test Chrome dashboard new tab plugin
+# Chrome dashboard new tab plugin
 
 ![Screenshot](/screenshots/dashboard.png)
 
