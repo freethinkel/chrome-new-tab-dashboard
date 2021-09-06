@@ -4,6 +4,7 @@ import { AppStorage } from '../services/storage';
 
 const DEFAULT = {
 	name: 'PNP Dashboard',
+	titleColor: '#fff',
 	layout: [] as Layout[],
 	backgroundImage: null as string | null,
 	codeEditorSettings: {

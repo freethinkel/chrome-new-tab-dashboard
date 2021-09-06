@@ -1,6 +1,7 @@
 import { createStore, update } from 'nanostores';
 
 export enum ModalSize {
+	popup,
 	xs,
 	md,
 	lg,

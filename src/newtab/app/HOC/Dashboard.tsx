@@ -10,6 +10,7 @@ import { Icon } from '../components/Icon';
 import { SettingsModal } from '../modal/SettingsModal';
 import { Grid } from './Grid';
 import { Layout } from 'react-grid-layout';
+import { ConfirmPopup } from '../modal/Confirm';
 
 export const Dashboard: FC = () => {
 	const allPlugins = useStore(plugins.store);
@@ -20,7 +21,12 @@ export const Dashboard: FC = () => {
 			<div className='px-4 py-6'>
 				<div className='container mx-auto'>
 					<div className='flex justify-between mb-3'>
-						<h1 className='text-3xl font-black'>{settingsStore.name}</h1>
+						<h1
+							style={{ color: settingsStore.titleColor || '#fff' }}
+							className='text-3xl font-black'
+						>
+							{settingsStore.name}
+						</h1>
 						<div className='flex gap-1'>
 							<IconButton
 								onClick={() => plugins.addNewPlugin({ name: 'test' })}
@@ -45,7 +51,21 @@ export const Dashboard: FC = () => {
 							<div key={plugin.id}>
 								<PluginCard
 									plugin={plugin}
-									onDelete={() => plugins.deletePlugin(plugin.id!)}
+									onDelete={() => {
+										modal.openModal({
+											component: (
+												<ConfirmPopup
+													onResolve={() => {
+														plugins.deletePlugin(plugin.id!);
+														modal.closeModal();
+													}}
+													onReject={modal.closeModal}
+												/>
+											),
+											name: 'Вы уверены?',
+											size: modal.ModalSize.popup,
+										});
+									}}
 									onEdit={() => {
 										modal.openModal({
 											component: <EditWidgetModal plugin={plugin} />,

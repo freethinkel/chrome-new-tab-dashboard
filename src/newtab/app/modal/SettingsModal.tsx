@@ -2,6 +2,7 @@ import { useStore } from 'nanostores/react';
 import React from 'react';
 import { useRef } from 'react';
 import Button from '../components/Button';
+import { ColorPicker } from '../components/ColorPicker';
 import { Icon } from '../components/Icon';
 import { Input } from '../components/Input';
 import { ImportExportService } from '../services/export';
@@ -19,13 +20,21 @@ export const SettingsModal = () => {
 
 	return (
 		<div className='flex flex-col w-full pb-2 gap-4'>
-			<div className=''>
-				<Input
-					onChange={(name) => settings.updateSetting({ name })}
-					value={settingsStore.name}
-					placeholder='Введите название'
-					label='Название'
-				/>
+			<div className='flex justify-between items-end'>
+				<div className='flex-grow'>
+					<Input
+						onChange={(name) => settings.updateSetting({ name })}
+						value={settingsStore.name}
+						placeholder='Введите название'
+						label='Название'
+					/>
+				</div>
+				<div className='pl-2'>
+					<ColorPicker
+						defaultColor={settingsStore.titleColor}
+						onChange={(color) => settings.updateSetting({ titleColor: color })}
+					/>
+				</div>
 			</div>
 			<div className=''>
 				<Input

@@ -21,6 +21,7 @@ export const Modal = () => {
 	}
 
 	const sizes = {
+		[modal.ModalSize.popup]: 'max-w-xs h-auto',
 		[modal.ModalSize.xs]: 'max-w-xl h-auto',
 		[modal.ModalSize.md]: 'max-w-4xl h-full',
 		[modal.ModalSize.lg]: 'max-w-full h-full max-h-full',
